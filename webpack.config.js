@@ -1,7 +1,7 @@
 module.exports = {// eslint-disable-line
-	entry: "./app.js",
+	entry: "./src/app.js",
 	output: {
-		filename: "bundle.js"
+		filename: "./public/bundle.js"
 	},
 	module: {
 		rules: [{

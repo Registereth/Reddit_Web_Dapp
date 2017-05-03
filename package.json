@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/kingcocomango/Redditreg/issues"
   },
-  "homepage": "https://github.com/kingcocomango/Redditreg#readme"
+  "homepage": "https://github.com/kingcocomango/Redditreg#readme",
+  "devDependencies": {
+    "webpack": "^2.4.1"
+  }
 }

@@ -1,9 +1,14 @@
-import React, {Component} from "react"; // eslint-disable-line
+/* eslint-disable */
+import React, {Component} from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router,Route, Switch} from "react-router-dom";
+import {Card,CardTitle,CardText} from "react-md/lib/Cards";
 import NavigationDrawer from "react-md/lib/NavigationDrawers";
 import NavLink from "./Navlink";
-import Greeting from "./bar.js"; // eslint-disable-line
+import Greeting from "./bar.js";
+import "../sass/example.scss";
+import Home from "./Home.js";
+/* esling-enable */
 
 const navItems = [{
 	exact: true,
@@ -23,17 +28,11 @@ const navItems = [{
 	to: "/page-3",
 	icon: "flight_land",
 }];
-class Home extends Component{
-	render() {
-		return (
-			<Card> <CardTitle title="FOO" /> <CardText> <p>BAR</p></CardText></Card>
-		);
-	}
-}
+
 class Page1 extends Component{
 	render() {
 		return(
-				<Card> <CardTitle title="Not-foo" /> <CardText> <p> Not-bar </p> </CardText></Card>
+				<Card className="greeting"> <CardTitle title="Not-foo" /> <CardText> <p> Not-bar </p> </CardText></Card>
 		);
 	}
 }
@@ -50,8 +49,9 @@ class App extends Component {
 				>
 				<Switch key={location.key}>
 					<Route exact path="/" location={location} component={Home} />
-					<Route path="/page-1" location={location} component={Page1} />
 					<Route path="/page-2" location={location} component={Woops} />
+					<Route path="/page-1" location={location} component={Page1} />
+					<Route path="/page-3" location={location} component={Greeting} />
 					
 				</Switch>
 				</NavigationDrawer>
@@ -67,6 +67,5 @@ class Woops extends Component {
 		);
 	}
 }
-export default App;
 ReactDOM.render( 
 	<Router><App /></Router>, document.getElementById("root"));

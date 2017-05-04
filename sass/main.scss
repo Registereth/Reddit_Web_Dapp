@@ -1,0 +1,25 @@
+@import './node_modules/normalize-scss/sass/_normalize';
+@import './node_modules/react-md/src/scss/react-md';
+$md-primary-color: $md-deep-purple-300;
+$md-secondary-color: $md-deep-purple-a-200;
+@include react-md-everything;
+
+.infocard {
+	max-width: 600px;
+    background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+}
+
+.fullgradient {
+	background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+}
+
+
+.greeting {
+  left: 50%;
+  margin: 1em;
+  max-width: 320px;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 100%;
+}

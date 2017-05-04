@@ -1,7 +1,9 @@
+/* eslint-disable */
 import React, { PropTypes } from "react";
 import { Link as RouterLink, Route } from "react-router-dom";
 import FontIcon from "react-md/lib/FontIcons";
 import ListItem from "react-md/lib/Lists/ListItem";
+/* eslint-enable */
 
 const NavLink = ({ label, to, exact, icon }) => (
 	<Route path={to} exact={exact}>

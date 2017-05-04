@@ -3,7 +3,7 @@ import Card from "react-md/lib/Cards/Card";// eslint-disable-line
 import CardTitle from "react-md/lib/Cards/CardTitle";// eslint-disable-line
 import CardText from "react-md/lib/Cards/CardText";// eslint-disable-line
 
-import "../sass/example.scss";
+import "../sass/main.scss";
 
 const Greeting = () => (
   <Card className="greeting">

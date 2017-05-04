@@ -4,10 +4,13 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router,Route, Switch} from "react-router-dom";
 import {Card,CardTitle,CardText} from "react-md/lib/Cards";
 import NavigationDrawer from "react-md/lib/NavigationDrawers";
+import Randvatar from "./Randvatar.js";
 import NavLink from "./Navlink";
 import Greeting from "./bar.js";
-import "../sass/example.scss";
+import "../sass/main.scss";
 import Home from "./Home.js";
+import Regcard from "./Regcard.js"
+import Showcard from "./Showcard.js"
 /* esling-enable */
 
 const navItems = [{
@@ -17,7 +20,7 @@ const navItems = [{
 	icon: "home",
 }, {
 	label: "Page 1",
-	to: "/page-1",
+	to: "/foo",
 	icon: "bookmark",
 }, {
 	label: "Page 2",
@@ -43,17 +46,23 @@ class App extends Component {
 			<Route
 			render={({ location }) => (
 				<NavigationDrawer
-				drawerTitle="react-md with CRA"
-				toolbarTitle="Welcome to react-md"
+				drawerTitle="Nav"
+				toolbarTitle="Register.eth"
 				navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}
+				drawerType={NavigationDrawer.DrawerTypes.TEMPORARY}
 				>
-				<Switch key={location.key}>
+				<Switch>
 					<Route exact path="/" location={location} component={Home} />
-					<Route path="/page-2" location={location} component={Woops} />
-					<Route path="/page-1" location={location} component={Page1} />
+					<Route path="/page-2" location={location} component={Regcard} />
+					<Route path="/page-1" location={location} component={Showcard} />
 					<Route path="/page-3" location={location} component={Greeting} />
-					
 				</Switch>
+				
+					
+				
+				
+				<p> Hi! This is {location.key} on path {location.pathname}</p>
+				<Randvatar reddit="fooman"/>
 				</NavigationDrawer>
 			)}
 			/>

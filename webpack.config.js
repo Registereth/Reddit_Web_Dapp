@@ -1,4 +1,6 @@
-module.exports = {// eslint-disable-line
+/* eslint-disable */
+var path = require("path");
+module.exports = {
 	entry: "./src/app.js",
 	output: {
 		filename: "./public/bundle.js"
@@ -10,9 +12,19 @@ module.exports = {// eslint-disable-line
 			use: {
 				loader: "babel-loader",
 				options: {
-					presets: ["env","es2015", "react"]
+					presets: ["env", "es2015", "react"]
 				}
 			}
+		}, {
+			test: /\.scss$/,
+			exclude: /(node_modules|bower_components)/,
+			use: [{
+				loader: "style-loader"
+			}, {
+				loader: "css-loader"
+			}, {
+				loader: "sass-loader",
+			}]
 		}]
 	}
 };

@@ -9,9 +9,10 @@ import NavLink from "./Navlink";
 import Greeting from "./bar.js";
 import "../sass/main.scss";
 import Home from "./Home.js";
-import Getcard from "./Getcard.js"
-import Showcard from "./Showcard.js"
-import Regcard from "./Regcard.js"
+import Getcard from "./Getcard.js";
+import Showcard from "./Showcard.js";
+import Regcard from "./Regcard.js";
+import ThanksFooter from "./ThanksFooter.js";
 /* esling-enable */
 
 const navItems = [{
@@ -47,23 +48,20 @@ class App extends Component {
 			<Route
 			render={({ location }) => (
 				<NavigationDrawer
-				drawerTitle="Nav"
-				toolbarTitle="Register.eth"
-				navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}
-				drawerType={NavigationDrawer.DrawerTypes.TEMPORARY}
+					drawerTitle="Nav"
+					toolbarTitle="Register.eth"
+					navItems={navItems.map(props => <NavLink {...props} key={props.to} />)}
+					drawerType={NavigationDrawer.DrawerTypes.TEMPORARY}
+					footer={ThanksFooter()}
 				>
-				<Switch>
-					<Route exact path="/" location={location} component={Home} />
-					<Route path="/page-2" location={location} component={Getcard} />
-					<Route path="/page-1" location={location} component={Showcard} />
-					<Route path="/page-3" location={location} component={Regcard} />
-				</Switch>
-				
-					
-				
-				
-				<p> Hi! This is {location.key} on path {location.pathname}</p>
-				<Randvatar reddit="fooman"/>
+					<Switch>
+						<Route exact path="/" location={location} component={Home} />
+						<Route path="/page-2" location={location} component={Getcard} />
+						<Route path="/page-1" location={location} component={Showcard} />
+						<Route path="/page-3" location={location} component={Regcard} />
+						<Route path="/" location={location} component={Woops} />
+					</Switch>
+
 				</NavigationDrawer>
 			)}
 			/>
@@ -72,8 +70,8 @@ class App extends Component {
 }
 class Woops extends Component {
 	render() {
-		return ( < div >
-			< p > Woops, nothing here! < /p>  < /div>
+		return ( 
+			<div className="md-block-centered"> <p> Woops, nothing here! </p>  </div>
 		);
 	}
 }

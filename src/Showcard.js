@@ -1,11 +1,13 @@
 /* eslint-disable */
 import React, { Component } from 'react';
+import { Link as RouterLink, Route } from "react-router-dom";
 import Randvatar from "./Randvatar.js";
 import Card from "react-md/lib/Cards/Card";
 import CardTitle from "react-md/lib/Cards/CardTitle";
 import CardActions from "react-md/lib/Cards/CardActions";
 import CardText from "react-md/lib/Cards/CardText";
 import Paper from 'react-md/lib/Papers';
+import Button from 'react-md/lib/Buttons/Button';
 import {GetNameFromAddr, GetAddrFromName, GetProofFromAddr} from "./ContractUtils.js";
 /* eslint-enable */
 
@@ -30,10 +32,15 @@ export default class Showcard extends Component {
 					<Randvatar reddit={this.state.name} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText style={{textAlign: "center"}}> 
-					<div className="infofield"> You are <Paper zDepth={2} className="SolidPaper"> {this.state.addr} </Paper> </div>
-					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="SolidPaper"> {this.state.name} </Paper> </div>
-					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="SolidPaper"> {this.state.proof} </Paper> </div>
+					<div className="infofield"> You are <Paper zDepth={2} className="fullgradient"> {this.state.addr} </Paper> </div>
+					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="fullgradient"> {this.state.name} </Paper> </div>
+					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="fullgradient"> {this.state.proof} </Paper> </div>
 				</CardText>
+				<CardActions>
+					<RouterLink to="page-3" className="md-block-centered"> 
+						<Button raised className="fullgradient" label="Change" style={{fontSize: "13px", textTransform: "none"}} > edit </Button>
+					</RouterLink>
+				</CardActions>
 			</Card>
 		);
 	}

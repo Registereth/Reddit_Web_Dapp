@@ -5,6 +5,7 @@ import Card from "react-md/lib/Cards/Card";
 import CardTitle from "react-md/lib/Cards/CardTitle";
 import CardActions from "react-md/lib/Cards/CardActions";
 import CardText from "react-md/lib/Cards/CardText";
+import Paper from 'react-md/lib/Papers';
 import {GetNameFromAddr, GetAddrFromName, GetProofFromAddr} from "./ContractUtils.js";
 /* eslint-enable */
 
@@ -24,14 +25,16 @@ export default class Showcard extends Component {
 	}
 	render() {
 		return (
-      <Card className="greeting"> 
-		<CardTitle>
-			<Randvatar reddit={this.state.name} />
-		</CardTitle> 
-		<CardText> 
-			<p> bar </p> 
-		</CardText>
-      </Card>
+			<Card className="md-block-centered infocard"> 
+				<CardTitle title="">
+					<Randvatar reddit={this.state.name} style={{margin: "auto"}}/>
+				</CardTitle> 
+				<CardText style={{textAlign: "center"}}> 
+					<div className="infofield"> You are <Paper zDepth={2} className="SolidPaper"> {this.state.addr} </Paper> </div>
+					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="SolidPaper"> {this.state.name} </Paper> </div>
+					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="SolidPaper"> {this.state.proof} </Paper> </div>
+				</CardText>
+			</Card>
 		);
 	}
 }

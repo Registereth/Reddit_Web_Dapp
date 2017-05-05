@@ -9,8 +9,9 @@ import NavLink from "./Navlink";
 import Greeting from "./bar.js";
 import "../sass/main.scss";
 import Home from "./Home.js";
-import Regcard from "./Regcard.js"
+import Getcard from "./Getcard.js"
 import Showcard from "./Showcard.js"
+import Regcard from "./Regcard.js"
 /* esling-enable */
 
 const navItems = [{
@@ -20,7 +21,7 @@ const navItems = [{
 	icon: "home",
 }, {
 	label: "Page 1",
-	to: "/foo",
+	to: "/page-1",
 	icon: "bookmark",
 }, {
 	label: "Page 2",
@@ -53,9 +54,9 @@ class App extends Component {
 				>
 				<Switch>
 					<Route exact path="/" location={location} component={Home} />
-					<Route path="/page-2" location={location} component={Regcard} />
+					<Route path="/page-2" location={location} component={Getcard} />
 					<Route path="/page-1" location={location} component={Showcard} />
-					<Route path="/page-3" location={location} component={Greeting} />
+					<Route path="/page-3" location={location} component={Regcard} />
 				</Switch>
 				
 					

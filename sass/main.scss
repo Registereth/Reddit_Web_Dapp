@@ -5,12 +5,30 @@ $md-secondary-color: $md-deep-purple-a-200;
 @include react-md-everything;
 
 .infocard {
+	// top: 50%;
+	// left: 50%;
+	// position: absolute;
+	@extend %md-block-centered;
 	max-width: 600px;
-    background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+    // background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+    background-color: $md-deep-purple-a-100;
+
+    .infofield{
+    	margin-bottom: 10px;
+    	// background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+    }
+
+    .react-gravatar{
+		margin: auto;
+	}
 }
 
 .fullgradient {
 	background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+}
+
+.solidpaper {
+	background-color: $md-deep-purple-a-100
 }
 
 

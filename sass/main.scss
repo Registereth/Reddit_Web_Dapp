@@ -4,11 +4,17 @@ $md-primary-color: $md-deep-purple-300;
 $md-secondary-color: $md-deep-purple-a-200;
 @include react-md-everything;
 
+@mixin centerpage {
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate3d(-50%, -50%, 0);
+}
+
+
 .infocard {
-	// top: 50%;
-	// left: 50%;
-	// position: absolute;
-	@extend %md-block-centered;
+	
+	@include centerpage;
 	max-width: 600px;
     // background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
     background-color: $md-deep-purple-a-100;
@@ -16,10 +22,29 @@ $md-secondary-color: $md-deep-purple-a-200;
     .infofield{
     	margin-bottom: 10px;
     	// background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
+    	div {
+    		padding: 3 5; // make sure there's room to breathe
+    	}
     }
 
     .react-gravatar{
 		margin: auto;
+	}
+
+	.ButtonRight{
+		right: 8px;
+		position: absolute;
+		font-size: 10px;
+	}
+
+	.ButtonLeft{
+		left: 8px;
+		position: absolute;
+		font-size: 10px;
+	}
+
+	.TextInput{
+		background-color: $md-primary-color;
 	}
 }
 
@@ -28,9 +53,21 @@ $md-secondary-color: $md-deep-purple-a-200;
 }
 
 .solidpaper {
-	background-color: $md-deep-purple-a-100
+	background-color: $md-secondary-color;
 }
 
+.fixedFooter {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.centerinputs {
+	input {
+		text-align: center;
+	}
+}
 
 .greeting {
   left: 50%;
@@ -38,6 +75,6 @@ $md-secondary-color: $md-deep-purple-a-200;
   max-width: 320px;
   position: absolute;
   top: 50%;
-  transform: translate3d(-50%, -50%, 0);
+  
   width: 100%;
 }

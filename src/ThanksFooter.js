@@ -5,7 +5,7 @@ import React, { Component } from "react";
 
 const ThanksFooter = () => {
 	return (
-		<footer className="md-paper md-paper--2 md-toolbar--text-white md-text-center">
+		<footer className="md-paper md-paper--2 md-toolbar--text-white md-text-center fixedFooter" style={{zIndex:"-1"}}>
 			<p> Thanks to the Sponsors: u/maxxFlyer, u/madvas, Joe Urgo, Jarred Case </p>
 			<p> Thanks to the devs: Adam Dossa, Roland Kofler, Kingcocomango </p>
 		</footer>

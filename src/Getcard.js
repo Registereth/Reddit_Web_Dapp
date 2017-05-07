@@ -11,14 +11,14 @@ const metaimg = "/img/meta.png";
 const mistimg = "/img/mist.png";
 
 const Getcard = () => (
-  <Card className="md-block-centered infocard">
+  <Card className="infocard">
     <CardTitle title="Needs more Ethereum!"/>
     <CardText>
       <p>In order to use this application you need to have <b>Metamask</b> installed in your Chrome browser, or download the Ethereum <b>Mist browser</b></p>
     </CardText>
     <div className="md-grid ">
       <Media className="md-cell md-cell--6">
-        <img src={metaimg} role="presentation" style={{backgroundColor: "blueviolet"}}/>
+        <img src={metaimg} role="presentation" />
       </Media>
       <Media className="md-cell md-cell--6">
         <img src={mistimg} role="presentation" />

@@ -5,14 +5,15 @@ import { BrowserRouter as Router,Route, Switch} from "react-router-dom";
 import {Card,CardTitle,CardText} from "react-md/lib/Cards";
 import NavigationDrawer from "react-md/lib/NavigationDrawers";
 import Randvatar from "./Randvatar.js";
-import NavLink from "./Navlink";
-import Greeting from "./bar.js";
-import "../sass/main.scss";
-import Home from "./Home.js";
-import Getcard from "./Getcard.js";
+import Greeting from "./bar.js"; // FIXME remove this before release
+import "../sass/main.scss"; // The styling
+import Web3 from "web3"; // web3
+import NavLink from "./Navlink"; // Utility class
+import Getcard from "./Getcard.js"; // here down are our own imports
 import Showcard from "./Showcard.js";
 import Regcard from "./Regcard.js";
 import ThanksFooter from "./ThanksFooter.js";
+import {GetCoinbase, CheckGetweb3, CheckTransaction, ParseOutNameAddr } from "./DappUtils.js";
 /* esling-enable */
 
 const navItems = [{
@@ -34,13 +35,6 @@ const navItems = [{
 	icon: "flight_land",
 }];
 
-class Page1 extends Component{
-	render() {
-		return(
-				<Card className="greeting"> <CardTitle title="Not-foo" /> <CardText> <p> Not-bar </p> </CardText></Card>
-		);
-	}
-}
 
 class App extends Component {
 	render() {
@@ -54,13 +48,8 @@ class App extends Component {
 					drawerType={NavigationDrawer.DrawerTypes.TEMPORARY}
 					footer={ThanksFooter()}
 				>
-					<Switch>
-						<Route exact path="/" location={location} component={Home} />
-						<Route path="/page-2" location={location} component={Getcard} />
-						<Route path="/page-1" location={location} component={Showcard} />
-						<Route path="/page-3" location={location} component={Regcard} />
-						<Route path="/" location={location} component={Woops} />
-					</Switch>
+
+					<Web3wrapper passon={location}/>
 
 				</NavigationDrawer>
 			)}
@@ -68,6 +57,22 @@ class App extends Component {
 		);
 	}
 }
+
+
+class Web3wrapper extends Component {
+	render(){
+		let web3 = CheckGetweb3();
+		let passonlocation = this.props.passon;
+		if(!web3){ // no web3 so we show them the getcard
+			return (
+				<Getcard />
+			)
+		} else{
+			return (<div> <p> FOOBAR </p> </div> )
+		}
+	};
+}
+
 class Woops extends Component {
 	render() {
 		return ( 
@@ -75,5 +80,4 @@ class Woops extends Component {
 		);
 	}
 }
-ReactDOM.render( 
-	<Router><App /></Router>, document.getElementById("root"));
+ReactDOM.render(<Router><App /></Router>, document.getElementById("root"));

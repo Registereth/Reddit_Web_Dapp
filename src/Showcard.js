@@ -27,7 +27,7 @@ export default class Showcard extends Component {
 	}
 	render() {
 		return (
-			<Card className="md-block-centered infocard"> 
+			<Card className="infocard"> 
 				<CardTitle title="">
 					<Randvatar reddit={this.state.name} style={{margin: "auto"}}/>
 				</CardTitle> 
@@ -38,7 +38,7 @@ export default class Showcard extends Component {
 				</CardText>
 				<CardActions>
 					<RouterLink to="page-3" className="md-block-centered"> 
-						<Button raised className="fullgradient" label="Change" style={{fontSize: "13px", textTransform: "none"}} > edit </Button>
+						<Button raised primary={true} label="Change" style={{fontSize: "13px", textTransform: "none"}} > edit </Button>
 					</RouterLink>
 				</CardActions>
 			</Card>

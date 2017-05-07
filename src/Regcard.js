@@ -37,32 +37,34 @@ export default class Regcard extends Component {
 	render() {
 		const {addr, name, proof} = this.state;
 		return (
-			<Card className="md-block-centered infocard"> 
+			<Card className="infocard"> 
 				<CardTitle title="">
 					<Randvatar reddit={name} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText className="md-text-center"> 
 					<div className="infofield"> Switch to your preffered Ethereum address
-						<Paper zDepth={2} className="fullgradient"> {addr} </Paper> 
+						<Paper zDepth={0} className="fullgradient"> {addr} </Paper> 
 					</div>
 					<div className="infofield"> Create a new /r/ethereumproofs post with your current address as the post title
-						<Button raised className="fullgradient" label="POST" target="_blank" style={{fontSize: "10px"}} 
-							href={"https://www.reddit.com/r/ethereumproofs/submit?selftext=true&title="+addr}>  comment </Button>
+						
 					</div>
 					<div className="infofield"> Copy paste your r/ethereumproofs URL here
-						<Paper zDepth={2} className="fullgradient">
+						<Paper zDepth={0} className="TextInput">
 							<TextField
 								id="proofText"
 								label=""
 								value={proof}
 								onChange={this.HandleTextChange}
+								className="centerinputs"
 							/>
 						</Paper> 
 					</div>
 				</CardText>
-				<CardActions>
-					<Button raised className="fullgradient md-block-centered" label="Submit" style={{fontSize: "10px"}} 
-						onClick={() => {RegisterNew(name, addr, proof);}}> check </Button>
+				<CardActions style={{height:"50"}}>
+					<Button raised primary={true}className="ButtonLeft" label="Submit"  
+						onClick={() => {RegisterNew(name, addr, proof);}} disabled={false}> check </Button>
+					<Button raised primary={true} className="ButtonRight" label="POST" target="_blank" 
+							href={"https://www.reddit.com/r/ethereumproofs/submit?selftext=true&title="+addr}>  comment </Button>
 				</CardActions>
 			</Card>
 		);

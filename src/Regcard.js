@@ -8,19 +8,21 @@ import CardText from "react-md/lib/Cards/CardText";
 import Paper from 'react-md/lib/Papers';
 import Button from 'react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
-import {GetNameFromAddr, GetAddrFromName, GetProofFromAddr, RegisterNew} from "./ContractUtils.js";
+import ContractInterface from "./ContractUtils.js";
 /* eslint-enable */
 
 export default class Regcard extends Component {
 	constructor(props){
 		super(props);
-		let addr = props.addr?props.addr:GetAddrFromName(props.name);
-		let name = props.name?props.name:GetNameFromAddr(props.addr);
-		let proof = props.proof?props.proof:GetProofFromAddr(addr);
+		let contract = new ContractInterface(this.props.web3);
+		let addr = props.addr?props.addr:contract.GetAddrFromName(props.name);
+		let name = props.name?props.name:contract.GetNameFromAddr(props.addr);
+		let proof = props.proof?props.proof:contract.GetProofFromAddr(addr);
 		this.state = {
 			addr: addr,
 			name: name,
-			proof: proof
+			proof: proof,
+			contract: contract
 		};
 		this.MakeRedditPost = this.MakeRedditPost.bind(this);
 		this.HandleTextChange = this.HandleTextChange.bind(this);
@@ -62,7 +64,7 @@ export default class Regcard extends Component {
 				</CardText>
 				<CardActions style={{height:"50px"}}>
 					<Button raised primary={true}className="ButtonLeft" label="Submit"  
-						onClick={() => {RegisterNew(name, addr, proof);}} disabled={false}> check </Button>
+						onClick={() => {this.state.contract.RegisterNew(name, addr, proof);}} disabled={false}> check </Button>
 					<Button raised primary={true} className="ButtonRight" label="POST" target="_blank" 
 							href={"https://www.reddit.com/r/ethereumproofs/submit?selftext=true&title="+addr}>  comment </Button>
 				</CardActions>

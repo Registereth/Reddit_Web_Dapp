@@ -74,7 +74,7 @@ class Web3wrapper extends Component {
 					<Switch>
 						<Route exact path="/" location={passonlocation} render={(rprops) => <Showcard {...rprops} web3={web3} coinbase={coinbase}/>}  />
 						<Route path="/register-1" location={passonlocation} render={(rprops) => <Regcard {...rprops} web3={web3} coinbase={coinbase}/>} />
-						<Route path="/page-2" location={passonlocation} render={(rprops) => <Getcard {...rprops} />} />
+						<Route path="/testget" location={passonlocation} render={(rprops) => <Getcard {...rprops} />} />
 						<Route path="/" location={passonlocation} component={Woops} />
 					</Switch>
 				)
@@ -85,7 +85,14 @@ class Web3wrapper extends Component {
 class Woops extends Component {
 	render() {
 		return ( 
-			<div className="md-block-centered"> <p> Woops, nothing here! </p>  </div>
+			<Card className="infocard">
+				<CardTitle title="How'd you get here?!"/>
+				<CardText>
+					<p>You seem to be lost, try heading back to the main page <a href="/"> home </a> </p>
+				</CardText>
+
+
+			</Card>
 		);
 	}
 }

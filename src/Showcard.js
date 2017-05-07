@@ -8,7 +8,7 @@ import CardActions from "react-md/lib/Cards/CardActions";
 import CardText from "react-md/lib/Cards/CardText";
 import Paper from 'react-md/lib/Papers';
 import Button from 'react-md/lib/Buttons/Button';
-import {GetNameFromAddr, GetAddrFromName, GetProofFromAddr} from "./ContractUtils.js";
+import ContractInterface from "./ContractUtils.js";
 import {ParseOutNameAddr} from "./DappUtils.js";
 /* eslint-enable */
 
@@ -21,27 +21,42 @@ export default class Showcard extends Component {
 		var NameAddrObj = ParseOutNameAddr(querystring);
 		var name = NameAddrObj.name; // This ugle bit of code brought to us by babel hainvg issues with object destructuring
 		var addr = NameAddrObj.addr;
+		var contract = new ContractInterface(this.props.web3);
 		if(name){ // got a name in the url
-			addr = GetAddrFromName(name); // use it to get address
-			proof = GetProofFromAddr(addr); // and use the addr to get the proof
+			this.state = {name: name, contract:contract, addr:"pending...", proof:"pending..."};
+			this.ExtraFromName(name);
 		} else if(addr){ // got an addr in the format
-			name = GetNameFromAddr(addr);// use it to get the name
-			proof = GetProofFromAddr(addr);
+			this.state = {addr:addr, contract:contract, name:"pending...", proof:"pending..."};
+			this.ExtraFromAddr(addr);
 		} else if(this.props.coinbase){ // no addr or name, but user has an address
-			addr = this.props.coinbase;
-			name = GetNameFromAddr(addr);
-			proof = GetProofFromAddr(addr);
+			this.state = {addr:this.props.coinbase, contract:contract, name:"pending...", proof:"pending..."};
+			this.ExtraFromAddr(addr);
 		} else{ // This really should never happen. This card should not be rendered without having the input needed in some way
-			addr = "0xDEADBEEF";
-			name = "Error occured";
-			var proof = "www.A mistake happened, please report it to the devs.com";
+			this.state = {
+				addr:"0xDEADBEEF",
+				name:"Error occured",
+				proof:"www.A mistake happened, please report it to the devs.com",
+				contract:contract
+			};
 		}
 
-		this.state = {
-			addr: addr,
-			name: name,
-			proof: proof
-		};
+		return;
+	}
+	ExtraFromName(name){
+		this.state.contract.GetAddrFromName(name,(address)=>{
+			this.setState({addr: address});
+			this.state.contract.GetProofFromAddr(address,(theproof)=>{
+				this.setState({proof: theproof});
+			});
+		});
+	}
+	ExtraFromAddr(addr){
+		this.state.contract.GetNameFromAddr(addr,(name)=>{
+			this.setState({name: name});
+			this.state.contract.GetProofFromAddr(addr,(proof)=>{
+				this.setState({proof:proof});
+			});
+		});
 	}
 	render() {
 		return (

@@ -60,7 +60,7 @@ export default class Regcard extends Component {
 						</Paper> 
 					</div>
 				</CardText>
-				<CardActions style={{height:"50"}}>
+				<CardActions style={{height:"50px"}}>
 					<Button raised primary={true}className="ButtonLeft" label="Submit"  
 						onClick={() => {RegisterNew(name, addr, proof);}} disabled={false}> check </Button>
 					<Button raised primary={true} className="ButtonRight" label="POST" target="_blank" 

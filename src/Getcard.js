@@ -14,7 +14,8 @@ const Getcard = () => (
   <Card className="infocard">
     <CardTitle title="Needs more Ethereum!"/>
     <CardText>
-      <p>In order to use this application you need to have <b>Metamask</b> installed in your Chrome browser, or download the Ethereum <b>Mist browser</b></p>
+      <p>In order to use this application you need to have <b>Metamask</b> installed in your Chrome browser, or download the Ethereum <b>Mist browser</b>.
+      You also need to have an ethereum account.</p>
     </CardText>
     <div className="md-grid ">
       <Media className="md-cell md-cell--6">

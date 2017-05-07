@@ -3,12 +3,14 @@ import Web3 from "web3"
 /* eslint-enable */
 
 
-function ParseOutNameAddr(querystring){
-	var getname = new RegExp("/\?username=([^&\s]+)/i");
-	var getaddr = new RegExp("/\?address=([^&\s]+)/i");
+function ParseOutNameAddr(querystring) {
+	let getname = new RegExp(/\?username=([^&\s]+)/i);
+	let getaddr = new RegExp(/\?address=([^&\s]+)/i);
+	let name = getname.exec(querystring);
+	let addr = getaddr.exec(querystring);
 	return ({
-		name: getname.exec(querystring),
-		addr: getaddr.exec(querystring)
+		name: name?name[1]:null, // if there's a match, take it. Otherwise return null
+		addr: addr?addr[1]:null
 	});
 
 }
@@ -93,8 +95,8 @@ function CheckGetweb3() {
 }
 
 function GetCoinbase(web3){
-	if ((!web3.eth.accounts || (web3.eth.accounts.length == 0))) {
-		return null; // no coinbase
+	if ((!web3 || (!web3.eth.accounts || (web3.eth.accounts.length == 0)))) {
+		return null; // no coinbase, or no web3 passed in
 	} else {
 		return web3.eth.accounts[0]; // returning the first account
 	}

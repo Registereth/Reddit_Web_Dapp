@@ -22,18 +22,19 @@ const navItems = [{
 	to: "/",
 	icon: "home",
 }, {
-	label: "Page 1",
-	to: "/page-1",
+	label: "Register",
+	to: "/register",
 	icon: "bookmark",
-}, {
-	label: "Page 2",
-	to: "/page-2",
-	icon: "donut_large",
-}, {
-	label: "Page 3",
-	to: "/page-3",
-	icon: "flight_land",
-}];
+ }//, {
+// 	label: "Page 2",
+// 	to: "/page-2",
+// 	icon: "donut_large",
+// }, {
+// 	label: "Page 3",
+// 	to: "/page-3",
+// 	icon: "flight_land",
+// }
+];
 
 
 class App extends Component {
@@ -62,13 +63,21 @@ class App extends Component {
 class Web3wrapper extends Component {
 	render(){
 		let web3 = CheckGetweb3();
+		let coinbase = GetCoinbase(web3);
 		let passonlocation = this.props.passon;
-		if(!web3){ // no web3 so we show them the getcard
+		if(!web3 || !coinbase){ // no web3 so we show them the getcard
 			return (
 				<Getcard />
 			)
 		} else{
-			return (<div> <p> FOOBAR </p> </div> )
+			return (
+					<Switch>
+						<Route exact path="/" location={passonlocation} render={(rprops) => <Showcard {...rprops} web3={web3} coinbase={coinbase}/>}  />
+						<Route path="/register-1" location={passonlocation} render={(rprops) => <Regcard {...rprops} web3={web3} coinbase={coinbase}/>} />
+						<Route path="/page-2" location={passonlocation} render={(rprops) => <Getcard {...rprops} />} />
+						<Route path="/" location={passonlocation} component={Woops} />
+					</Switch>
+				)
 		}
 	};
 }

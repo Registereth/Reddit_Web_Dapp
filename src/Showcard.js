@@ -17,7 +17,7 @@ import {ParseOutNameAddr} from "./DappUtils.js";
 export default class Showcard extends Component {
 	constructor(props){
 		super(props); // call parent cons
-		var querystring = this.props.location.search.substr(1); // this removes the leading "?"
+		var querystring = this.props.location.search //.substr(1); // this removes the leading "?"
 		var NameAddrObj = ParseOutNameAddr(querystring);
 		var name = NameAddrObj.name; // This ugle bit of code brought to us by babel hainvg issues with object destructuring
 		var addr = NameAddrObj.addr;
@@ -51,10 +51,11 @@ export default class Showcard extends Component {
 		// if(this.state.todo==="Error"){} // Currently not handled in any special way other than displaying error values on the card
 	}
 	ExtraFromName(name){
+		var caller = this;
 		this.state.contract.GetAddrFromName(name,(address)=>{
-			this.setState({addr: address});
-			this.state.contract.GetProofFromAddr(address,(theproof)=>{
-				this.setState({proof: theproof});
+			caller.setState({addr: address});
+			caller.state.contract.GetProofFromAddr(address,(theproof)=>{
+				caller.setState({proof: theproof});
 			});
 		});
 	}
@@ -74,12 +75,12 @@ export default class Showcard extends Component {
 				</CardTitle> 
 				<CardText style={{textAlign: "center"}}> 
 					<div className="infofield"> You are <Paper zDepth={2} className="fullgradient"> {this.state.addr||"0xDEADBEEF"} </Paper> </div>
-					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="fullgradient"> {this.state.name||"Error occured"} </Paper> </div>
-					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="fullgradient"> {this.state.proof||"Error"} </Paper> </div>
+					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="fullgradient"> {this.state.name||"Not Registered!"} </Paper> </div>
+					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="fullgradient"> {this.state.proof||"Nowhere"} </Paper> </div>
 				</CardText>
 				<CardActions>
-					<RouterLink to="page-3" className="md-block-centered"> 
-						<Button raised primary={true} label="Change" style={{fontSize: "13px", textTransform: "none"}} > edit </Button>
+					<RouterLink to="register" className="md-block-centered"> 
+						<Button raised primary={true} label={this.state.name?"Change":"Register!"} style={{fontSize: "13px", textTransform: "none"}} > edit </Button>
 					</RouterLink>
 				</CardActions>
 			</Card>

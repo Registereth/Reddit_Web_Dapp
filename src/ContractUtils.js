@@ -8,7 +8,7 @@ class ContractInterface {
 	}
 
 	GetAddrFromName(name, callback) {
-		if(!name){return null;}
+		if(!name){callback(null);return null;}
 		this.instance.lookupName.call(name, function(err, retval){
 			if(err){callback(null);}
 			callback(retval?retval[0]:null);
@@ -17,7 +17,7 @@ class ContractInterface {
 	}
 
 	GetNameFromAddr(addr, callback) {
-		if(!addr){return null;}
+		if(!addr){callback(null);return null;}
 		this.instance.lookupAddr.call(addr, function(err, retval){
 			if(err){callback(null);}
 			callback(retval?retval[0]:null);
@@ -26,7 +26,7 @@ class ContractInterface {
 	}
 
 	GetProofFromAddr(addr, callback) {
-		if(!addr){return null;}
+		if(!addr){callback(null);return null;}
 		this.instance.lookupAddr.call(addr, function(err, retval){
 			if(err){callback(null);}
 			callback(retval?retval[1]:null);
@@ -34,7 +34,21 @@ class ContractInterface {
 		return;
 	}
 
-	RegisterNew(name, addr, proof) {
+	GetCost(callback){
+		if(!callback){callback(null);return null;}
+		this.instance.getCost.sendTransaction( function(err, retval){
+			if(err){callback(null);}
+			callback(retval?retval[1]:null);
+		});
+		return;
+	}
+
+	RegisterNew(addr, proof, cost, callback) {
+		if(!addr || !proof){callback(null);return null;}
+		this.instance.register.sendTransaction(proof, addr, {value:cost, gas:1000000}, function(err, retval){
+			if(err){callback(null);}
+			callback(retval?retval:null);
+		});
 		return true;
 	}
 

@@ -73,7 +73,7 @@ class Web3wrapper extends Component {
 			return (
 					<Switch>
 						<Route exact path="/" location={passonlocation} render={(rprops) => <Showcard {...rprops} web3={web3} coinbase={coinbase}/>}  />
-						<Route path="/register-1" location={passonlocation} render={(rprops) => <Regcard {...rprops} web3={web3} coinbase={coinbase}/>} />
+						<Route path="/register" location={passonlocation} render={(rprops) => <Regcard {...rprops} web3={web3} coinbase={coinbase}/>} />
 						<Route path="/testget" location={passonlocation} render={(rprops) => <Getcard {...rprops} />} />
 						<Route path="/" location={passonlocation} component={Woops} />
 					</Switch>

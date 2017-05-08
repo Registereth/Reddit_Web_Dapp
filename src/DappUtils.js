@@ -19,51 +19,51 @@ function ParseOutNameAddr(querystring) {
 stateref will be an object that starts out with {web3: someweb3}, and will then be used to store the state between iterations
 it will contain {status: "pending"} while transaction is pending, {status: "error"} on error, and {status: "success"} on success
 */
-function CheckTransaction(hash, gas, stateref) {
-	if(!stateref){ // cant do anything without this
+var iters=0;
+function CheckTransaction(hash, gas, web3, callback) {
+	if(!callback||!web3||!gas||!hash){ // cant do anything without this
 		return;
 	}
-	if(!stateref.web3){ // Make sure there is web3
-		stateref.status = "error";
-		stateref.extra = "No web3 passed to function"; // a string, optional
+	if(!web3){ // Make sure there is web3
+		callback({ 
+			status: "error",
+			extra: "No web3 passed to function"});// a string, optional
 		return;
 	}
-	if(!stateref.iter){
-		stateref.iter=0; // first run, setup state
-	}
-	if(stateref.iter>=120) { // check if we've run too many times
-		stateref.status = "error";
-		stateref.extra = "Ran out of iterations"; // a string, optional
-		return;
-	}
-	if(stateref.status==="error"||stateref.status==="success"){ // end condition of recursive calling
+	if(iters>=120) { // check if we've run too many times
+		callback({
+			status: "error",
+			extra:"Ran out of iterations"}); // a string, optional
 		return;
 	}
 
-	stateref.web3.eth.getTransactionReceipt(hash,
+	web3.eth.getTransactionReceipt(hash,
 		function(error, obj) {
 			if (error){ // we got an error from web3
-				stateref.status = "error";
-				stateref.extra = "web3 get receipt returned an error: "+error;
+				callback({
+					status: "error",
+					extra: "web3 get receipt returned an error: "+error});
 				return; // we can stop here
 			}
 			if (obj != null){ // we got some response from web3
 				if ((obj["blockHash"] == "0x0000000000000000000000000000000000000000000000000000000000000000") || (obj["blockHash"] == null)) {
 					// Transaction not minted yet
-					stateref.iter++; // increment the counter
-					setTimeout(function(){ CheckTransaction(hash, gas, stateref );}, 4000); // prepare the next call
+					iters++; // increment the counter
+					setTimeout(function(){ CheckTransaction(hash, gas, web3, callback );}, 4000); // prepare the next call
 					return; // and stop here
 				} else{
 					// Transaction minted
 					if (obj["gasUsed"] == gas) {
 						// Probably ran out of gas.
-						stateref.status = "error";
-						stateref.extra = "Ran out of gas"; // users get a bit more confident error message :D
+						callback({
+							status: "error",
+							extra: "Ran out of gas"}); // users get a bit more confident error message :D
 						return;
 					} else{
 						// All good 
-						stateref.status = "success";
-						stateref.extra = "Transaction mined successfully";
+						callback({
+							status: "success",
+							extra: "Transaction mined successfully"});
 						return;
 					}
 				}

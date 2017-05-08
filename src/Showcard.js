@@ -23,24 +23,32 @@ export default class Showcard extends Component {
 		var addr = NameAddrObj.addr;
 		var contract = new ContractInterface(this.props.web3);
 		if(name){ // got a name in the url
-			this.state = {name: name, contract:contract, addr:"pending...", proof:"pending..."};
-			this.ExtraFromName(name);
+			this.state = {name: name, contract:contract, addr:"pending...", proof:"pending...", todo:"ExtraFromName"};
+			// this.ExtraFromName(name);
 		} else if(addr){ // got an addr in the format
-			this.state = {addr:addr, contract:contract, name:"pending...", proof:"pending..."};
-			this.ExtraFromAddr(addr);
+			this.state = {addr:addr, contract:contract, name:"pending...", proof:"pending...", todo:"ExtraFromAddr"};
+			// this.ExtraFromAddr(addr);
 		} else if(this.props.coinbase){ // no addr or name, but user has an address
-			this.state = {addr:this.props.coinbase, contract:contract, name:"pending...", proof:"pending..."};
-			this.ExtraFromAddr(addr);
+			this.state = {addr:this.props.coinbase, contract:contract, name:"pending...", proof:"pending...", todo:"ExtraFromAddr"};
+			// this.ExtraFromAddr(addr);
 		} else{ // This really should never happen. This card should not be rendered without having the input needed in some way
 			this.state = {
 				addr:"0xDEADBEEF",
 				name:"Error occured",
 				proof:"www.A mistake happened, please report it to the devs.com",
-				contract:contract
+				contract:contract,
+				todo: "Error"
 			};
 		}
-
+		this.ExtraFromName = this.ExtraFromName.bind(this);
+		this.ExtraFromAddr = this.ExtraFromAddr.bind(this);
 		return;
+	}
+
+	componentWillMount(){ // These calls delayed so that no setstate can be called before the thing is actually about to be rendered
+		if(this.state.todo==="ExtraFromName"){this.ExtraFromName(this.state.name);}
+		if(this.state.todo==="ExtraFromAddr"){this.ExtraFromAddr(this.state.addr);}
+		// if(this.state.todo==="Error"){} // Currently not handled in any special way other than displaying error values on the card
 	}
 	ExtraFromName(name){
 		this.state.contract.GetAddrFromName(name,(address)=>{
@@ -62,12 +70,12 @@ export default class Showcard extends Component {
 		return (
 			<Card className="infocard"> 
 				<CardTitle title="">
-					<Randvatar reddit={this.state.name} style={{margin: "auto"}}/>
+					<Randvatar reddit={this.state.name||"ErrorExample"} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText style={{textAlign: "center"}}> 
-					<div className="infofield"> You are <Paper zDepth={2} className="fullgradient"> {this.state.addr} </Paper> </div>
-					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="fullgradient"> {this.state.name} </Paper> </div>
-					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="fullgradient"> {this.state.proof} </Paper> </div>
+					<div className="infofield"> You are <Paper zDepth={2} className="fullgradient"> {this.state.addr||"0xDEADBEEF"} </Paper> </div>
+					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="fullgradient"> {this.state.name||"Error occured"} </Paper> </div>
+					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="fullgradient"> {this.state.proof||"Error"} </Paper> </div>
 				</CardText>
 				<CardActions>
 					<RouterLink to="page-3" className="md-block-centered"> 

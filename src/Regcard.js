@@ -9,23 +9,34 @@ import Paper from 'react-md/lib/Papers';
 import Button from 'react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
 import ContractInterface from "./ContractUtils.js";
+import CheckTransaction from "./DappUtils.js";
+import LinearProgress from 'react-md/lib/Progress/LinearProgress';
 /* eslint-enable */
 
 export default class Regcard extends Component {
 	constructor(props){
 		super(props);
 		let contract = new ContractInterface(this.props.web3);
-		let addr = props.addr?props.addr:contract.GetAddrFromName(props.name);
-		let name = props.name?props.name:contract.GetNameFromAddr(props.addr);
-		let proof = props.proof?props.proof:contract.GetProofFromAddr(addr);
+		// FIXME instead of null try empty string or parse the query string
+		let addr = this.props.addr?this.props.addr:this.props.coinbase;
+		let name = this.props.name?this.props.name:null;
+		let proof = this.props.proof?this.props.proof:null;
 		this.state = {
 			addr: addr,
 			name: name,
 			proof: proof,
-			contract: contract
+			contract: contract,
+			web3: this.props.web3,
+			cost: 0,
+			status: "ready",
+			txhash: null,
+			txstatus: {},
+			txtimer:null
 		};
 		this.MakeRedditPost = this.MakeRedditPost.bind(this);
 		this.HandleTextChange = this.HandleTextChange.bind(this);
+		this.Register = this.Register.bind(this);
+		this.Checker = this.Checker.bind(this);
 	}
 
 	MakeRedditPost(){
@@ -34,6 +45,27 @@ export default class Regcard extends Component {
 
 	HandleTextChange(newval){
 		this.setState({proof: newval});
+	}
+
+	Register(){
+		this.contract.GetCost((cost)=>{
+			this.setState({cost:cost});
+			this.contract.RegisterNew(this.state.addr, this.state.proof, cost, (txhash)=>{
+				this.setState({txhash: txhash, status: txhash?"pending":"error"});
+				this.Checker(txhash);
+			});
+		});
+	}
+
+	Checker(txhash){
+		CheckTransaction(txhash, 1000000, this.state.web3, (txstatus)=>{
+			this.setState({txstatus:txstatus});
+		} );
+		this.setState({txtimer: setInterval(()=>{
+			if(this.state.txstatus.status==="error"){clearInterval(this.state.txtimer);this.setState({status:"error"});} // if an error happens we stop
+			if(this.state.txstatus.status==="pending"){this.setState({status:"pending"});}// do nothing while pending, just loop
+			if(this.state.txstatus.status==="success"){clearInterval(this.state.txtimer);this.setState({status:"success"});} // stop, notify of success
+		}, 4000)});
 	}
 
 	render() {
@@ -61,6 +93,9 @@ export default class Regcard extends Component {
 							/>
 						</Paper> 
 					</div>
+					{this.state.status==="pending" && <LinearProgress key="progress"/>}
+					{this.state.status==="success" && <Paper zDepth={2}> You've been registered! </Paper>}
+					{this.state.status==="error" && <Paper zDepth={3}> An error has occurred. </Paper>}
 				</CardText>
 				<CardActions style={{height:"50px"}}>
 					<Button raised primary={true}className="ButtonLeft" label="Submit"  

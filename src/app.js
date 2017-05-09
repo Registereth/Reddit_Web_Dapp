@@ -69,9 +69,16 @@ class Web3wrapper extends Component {
 		}
 	}
 	componentWillMount(){
+		this.redoEth(this);
+	}
+
+	redoEth(caller){
 		let web3 = CheckGetweb3();
 		let coinbase = GetCoinbase(web3);
-		this.setState({web3: web3, coinbase:coinbase});
+		if(!web3||!coinbase){
+			setTimeout(function(){caller.redoEth(caller);},100);
+		}
+		caller.setState({web3: web3, coinbase:coinbase});
 	}
 	render(){
 		let web3 = this.state.web3;

@@ -61,9 +61,21 @@ class App extends Component {
 
 
 class Web3wrapper extends Component {
-	render(){
+	constructor(props){
+		super(props);
+		this.state = {
+			web3:null,
+			coinbase:null
+		}
+	}
+	componentWillMount(){
 		let web3 = CheckGetweb3();
 		let coinbase = GetCoinbase(web3);
+		this.setState({web3: web3, coinbase:coinbase});
+	}
+	render(){
+		let web3 = this.state.web3;
+		let coinbase = this.state.coinbase;
 		let passonlocation = this.props.passon;
 		if(!web3 || !coinbase){ // no web3 so we show them the getcard
 			return (

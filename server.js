@@ -5,6 +5,13 @@ var path = require("path");
 var baseDirectory = "./public/" ;  // or whatever base directory you want
 
 var port = 9615;
+if(process.argv.length >2){
+    if(Number(process.argv[2])!==NaN){
+        if(Number.isInteger(Number(process.argv[2]))){
+            port = Number(process.argv[2]);
+        } 
+    }
+}
 
 http.createServer(function (request, response) {
    try {
@@ -13,10 +20,10 @@ http.createServer(function (request, response) {
      // need to use path.normalize so people can"t access directories underneath baseDirectory
      var fsPath;
      console.log(requestUrl.pathname);
-     if(requestUrl.pathname==="/" || requestUrl===""){
-     	fsPath = baseDirectory+"index.html";
+     if(requestUrl.pathname==="/" || requestUrl.pathname==="" ||requestUrl.pathname==="/register"){
+        fsPath = baseDirectory+"index.html";
      } else{
-	     fsPath = baseDirectory+path.normalize(requestUrl.pathname);
+         fsPath = baseDirectory+path.normalize(requestUrl.pathname);
      }
 
      response.writeHead(200);

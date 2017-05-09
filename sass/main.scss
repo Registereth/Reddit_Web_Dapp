@@ -16,14 +16,21 @@ $md-secondary-color: $md-deep-purple-a-200;
 	
 	@include centerpage;
 	max-width: 600px;
-    // background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
-    background-color: $md-deep-purple-a-100;
+    background-image: linear-gradient(rgba(159, 40, 189, 0.77), rgba(184, 56, 216, 0.35));
+    //background-color: $md-deep-purple-a-100;
 
     .infofield{
     	margin-bottom: 10px;
     	// background-image: linear-gradient(rgba(184, 56, 216, 0.35), rgba(159, 40, 189, 0.77));
     	div {
     		padding: 3 5; // make sure there's room to breathe
+    	}
+
+    	.infopaper{
+    		color: white;
+    		input {
+    			color: white;
+    		}
     	}
     }
 
@@ -44,7 +51,7 @@ $md-secondary-color: $md-deep-purple-a-200;
 	}
 
 	.TextInput{
-		background-color: $md-primary-color;
+		background-color: $md-secondary-color;
 	}
 }
 

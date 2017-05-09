@@ -85,7 +85,7 @@ export default class Regcard extends Component {
 		return (
 			<Card className="infocard"> 
 				<CardTitle title="">
-					<Randvatar reddit={name||"Initrandom"} style={{margin: "auto"}}/>
+					<Randvatar reddit={addr||"Initrandom"} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText className="md-text-center"> 
 					<div className="infofield"> Switch to your preffered Ethereum address

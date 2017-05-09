@@ -17,7 +17,7 @@ import {ParseOutNameAddr} from "./DappUtils.js";
 export default class Showcard extends Component {
 	constructor(props){
 		super(props); // call parent cons
-		var querystring = this.props.location.search //.substr(1); // this removes the leading "?"
+		var querystring = this.props.location.search; //.substr(1); // this removes the leading "?"
 		var NameAddrObj = ParseOutNameAddr(querystring);
 		var name = NameAddrObj.name; // This ugle bit of code brought to us by babel hainvg issues with object destructuring
 		var addr = NameAddrObj.addr;
@@ -71,7 +71,7 @@ export default class Showcard extends Component {
 		return (
 			<Card className="infocard"> 
 				<CardTitle title="">
-					<Randvatar reddit={this.state.name||"ErrorExample"} style={{margin: "auto"}}/>
+					<Randvatar reddit={this.state.addr||"ErrorExample"} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText style={{textAlign: "center"}}> 
 					<div className="infofield"> You are <Paper zDepth={2} className="solidpaper infopaper"> {this.state.addr||"0xDEADBEEF"} </Paper> </div>

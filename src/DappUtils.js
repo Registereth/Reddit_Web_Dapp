@@ -67,6 +67,10 @@ function CheckTransaction(hash, gas, web3, callback) {
 						return;
 					}
 				}
+			} else{//obj was null, still pending try again later
+				iters++; // increment the counter
+				setTimeout(function(){ CheckTransaction(hash, gas, web3, callback );}, 4000); // prepare the next call
+				return; // and stop here
 			}
 		}
 	);

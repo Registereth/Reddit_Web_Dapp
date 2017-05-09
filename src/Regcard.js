@@ -9,7 +9,7 @@ import Paper from 'react-md/lib/Papers';
 import Button from 'react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
 import ContractInterface from "./ContractUtils.js";
-import CheckTransaction from "./DappUtils.js";
+import {CheckTransaction} from "./DappUtils.js";
 import LinearProgress from 'react-md/lib/Progress/LinearProgress';
 /* eslint-enable */
 
@@ -17,14 +17,14 @@ export default class Regcard extends Component {
 	constructor(props){
 		super(props);
 		let contract = new ContractInterface(this.props.web3);
-		// FIXME instead of null try empty string or parse the query string
 		let addr = this.props.addr?this.props.addr:this.props.coinbase;
-		let name = this.props.name?this.props.name:null;
-		let proof = this.props.proof?this.props.proof:null;
+		let name = this.props.name?this.props.name:"Your reddit name";
+		let proof = this.props.proof?this.props.proof:"Paste the reddit link here!";
 		this.state = {
 			addr: addr,
 			name: name,
 			proof: proof,
+			proofText: "",
 			contract: contract,
 			web3: this.props.web3,
 			cost: 0,
@@ -37,6 +37,7 @@ export default class Regcard extends Component {
 		this.HandleTextChange = this.HandleTextChange.bind(this);
 		this.Register = this.Register.bind(this);
 		this.Checker = this.Checker.bind(this);
+		this.IntervalPipe = this.IntervalPipe.bind(this);
 	}
 
 	MakeRedditPost(){
@@ -44,40 +45,51 @@ export default class Regcard extends Component {
 	}
 
 	HandleTextChange(newval){
-		this.setState({proof: newval});
+		this.setState({proofText: newval, proof: this.GetRedditHash(newval)});
+	}
+
+	GetRedditHash(url){
+		let hashex = /.*\/ethereumproofs\/comments\/([a-z0-9]+)\/0x.*/i;
+		let reddithash = hashex.exec(url)?hashex.exec(url)[1]:null;
+		return reddithash?reddithash:null;
 	}
 
 	Register(){
-		this.contract.GetCost((cost)=>{
-			this.setState({cost:cost});
-			this.contract.RegisterNew(this.state.addr, this.state.proof, cost, (txhash)=>{
-				this.setState({txhash: txhash, status: txhash?"pending":"error"});
-				this.Checker(txhash);
+		var caller = this;
+		this.state.contract.GetCost((cost)=>{
+			caller.setState({cost:cost});
+			caller.state.contract.RegisterNew(caller.state.addr, caller.state.proof, cost, (txhash)=>{
+				caller.setState({txhash: txhash, status: txhash?"pending":"error"});
+				caller.Checker(txhash);
 			});
 		});
 	}
 
 	Checker(txhash){
+		var caller = this;
 		CheckTransaction(txhash, 1000000, this.state.web3, (txstatus)=>{
-			this.setState({txstatus:txstatus});
+			caller.setState({txstatus:txstatus});
 		} );
-		this.setState({txtimer: setInterval(()=>{
-			if(this.state.txstatus.status==="error"){clearInterval(this.state.txtimer);this.setState({status:"error"});} // if an error happens we stop
-			if(this.state.txstatus.status==="pending"){this.setState({status:"pending"});}// do nothing while pending, just loop
-			if(this.state.txstatus.status==="success"){clearInterval(this.state.txtimer);this.setState({status:"success"});} // stop, notify of success
-		}, 4000)});
+		caller.setState({txtimer: setInterval(caller.IntervalPipe, 4000)});
+	}
+
+	IntervalPipe(){
+		var caller = this;
+		if(caller.state.txstatus.status==="error"){clearInterval(caller.state.txtimer);caller.setState({status:"error"});} // if an error happens we stop
+		if(caller.state.txstatus.status==="pending"){caller.setState({status:"pending"});}// do nothing while pending, just loop
+		if(caller.state.txstatus.status==="success"){clearInterval(caller.state.txtimer);caller.setState({status:"success"});} // stop, notify of success
 	}
 
 	render() {
-		const {addr, name, proof} = this.state;
+		const {addr, name, _, proofText} = this.state;
 		return (
 			<Card className="infocard"> 
 				<CardTitle title="">
-					<Randvatar reddit={name} style={{margin: "auto"}}/>
+					<Randvatar reddit={name||"Initrandom"} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText className="md-text-center"> 
 					<div className="infofield"> Switch to your preffered Ethereum address
-						<Paper zDepth={0} className="fullgradient"> {addr} </Paper> 
+						<Paper zDepth={0} className="solidpaper infopaper"> {addr} </Paper> 
 					</div>
 					<div className="infofield"> Create a new /r/ethereumproofs post with your current address as the post title
 						
@@ -87,19 +99,19 @@ export default class Regcard extends Component {
 							<TextField
 								id="proofText"
 								label=""
-								value={proof}
+								value={proofText}
 								onChange={this.HandleTextChange}
-								className="centerinputs"
+								className="centerinputs infopaper"
 							/>
 						</Paper> 
 					</div>
-					{this.state.status==="pending" && <LinearProgress key="progress"/>}
+					{this.state.status==="pending" && <LinearProgress key="progress" id="transpending"/>}
 					{this.state.status==="success" && <Paper zDepth={2}> You've been registered! </Paper>}
 					{this.state.status==="error" && <Paper zDepth={3}> An error has occurred. </Paper>}
 				</CardText>
 				<CardActions style={{height:"50px"}}>
 					<Button raised primary={true}className="ButtonLeft" label="Submit"  
-						onClick={() => {this.state.contract.RegisterNew(name, addr, proof);}} disabled={false}> check </Button>
+						onClick={() => {this.Register();}} disabled={false}> check </Button>
 					<Button raised primary={true} className="ButtonRight" label="POST" target="_blank" 
 							href={"https://www.reddit.com/r/ethereumproofs/submit?selftext=true&title="+addr}>  comment </Button>
 				</CardActions>

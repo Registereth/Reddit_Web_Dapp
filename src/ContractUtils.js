@@ -37,16 +37,16 @@ class ContractInterface {
 
 	GetCost(callback){
 		if(!callback){callback(null);return null;}
-		this.instance.getCost.sendTransaction(0, function(err, retval){
+		this.instance.getCost.call(0, function(err, retval){
 			if(err){callback(null);}
-			callback(retval?retval[1]:null);
+			callback(retval?retval.toString():null);
 		});
 		return;
 	}
 
 	RegisterNew(addr, proof, cost, callback) {
 		if(!addr || !proof){callback(null);return null;}
-		this.instance.register.sendTransaction(proof, addr, 0, {value:cost, gas:1000000}, function(err, retval){
+		this.instance.register.sendTransaction(proof, addr, 0, {from:addr, value:cost}, function(err, retval){
 			if(err){callback(null);}
 			callback(retval?retval:null);
 		});

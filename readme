@@ -1,8 +1,0 @@
-# README
-
-## Install
-
-git clone
-cd
-npm install (--only=dev)
-node . (portnumber)

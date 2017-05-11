@@ -53,6 +53,10 @@ $md-secondary-color: rgba(142, 124, 197, 1);
 	.TextInput{
 		background-color: $md-secondary-color;
 	}
+
+	.react-gravatar{
+		border-radius: 50%;
+	}
 }
 
 .fullgradient {

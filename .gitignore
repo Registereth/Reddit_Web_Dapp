@@ -63,3 +63,6 @@ typings/
 /bundle.js
 
 /public/bundle.js
+
+/webpack.js
+

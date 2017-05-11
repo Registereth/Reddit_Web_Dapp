@@ -12,7 +12,7 @@ const mistimg = "/img/mist2.png";
 
 const Getcard = () => (
   <Card className="infocard">
-    <CardTitle title="Needs more Ethereum!"/>
+    <CardTitle className="centertitle" title="Needs more Ethereum!"/>
     <CardText>
       <p>In order to use this application you need to have <b>Metamask</b> installed in your Chrome browser, or download the Ethereum <b>Mist browser</b>.
       You also need to have an ethereum address; and be on mainnet</p>

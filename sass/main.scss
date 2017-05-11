@@ -2,6 +2,7 @@
 @import './node_modules/react-md/src/scss/react-md';
 $md-primary-color: rgba(142, 124, 197, 1);
 $md-secondary-color: rgba(142, 124, 197, 1);
+$md-font-family: Ubuntu;
 @include react-md-everything;
 
 @mixin centerpage {
@@ -36,6 +37,7 @@ $md-secondary-color: rgba(142, 124, 197, 1);
 
     .react-gravatar{
 		margin: auto;
+		border-radius: 50%;
 	}
 
 	.ButtonRight{
@@ -54,8 +56,18 @@ $md-secondary-color: rgba(142, 124, 197, 1);
 		background-color: $md-secondary-color;
 	}
 
-	.react-gravatar{
-		border-radius: 50%;
+	.centertitle{
+		h2 {
+			font-family: Ubuntu;
+			margin-left: auto;
+			margin-right: auto;
+			color: #674EA7;
+			font-size: 35px;
+		}	
+	}
+
+	p {
+		font-family: Ubuntu;
 	}
 }
 
@@ -83,6 +95,7 @@ $md-secondary-color: rgba(142, 124, 197, 1);
 .md-title--toolbar {
 	margin-right: auto;
 	margin-left: auto;
+	font-size: 32px;
 }
 
 .greeting {

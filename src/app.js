@@ -18,7 +18,7 @@ import {GetCoinbase, CheckGetweb3, CheckTransaction, ParseOutNameAddr } from "./
 
 const navItems = [{
 	exact: true,
-	label: "Home",
+	label: "Lookup",
 	to: "/",
 	icon: "home",
 }, {
@@ -84,7 +84,7 @@ class Web3wrapper extends Component {
 		let web3 = this.state.web3;
 		let coinbase = this.state.coinbase;
 		let passonlocation = this.props.passon;
-		if(!web3 || !coinbase){ // no web3 so we show them the getcard
+		if(!web3 || !coinbase || web3.version.network!=="4" ){ // no web3 so we show them the getcard FIXME this needs to be set to 1 for mainnet
 			return (
 				<Getcard />
 			)

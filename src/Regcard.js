@@ -83,16 +83,21 @@ export default class Regcard extends Component {
 	render() {
 		const {addr, name, _, proofText} = this.state;
 		return (
-			<Card className="infocard"> 
+			<Card className="infocard">
+				{this.state.status==="pending" && <LinearProgress key="progress" id="transpending"/>}
 				<CardTitle title="">
 					<Randvatar reddit={addr||"Initrandom"} style={{margin: "auto"}}/>
 				</CardTitle> 
 				<CardText className="md-text-center"> 
+					{this.state.status==="success" && <Paper zDepth={0} style={{fontSize: "22px"}}>
+						<RouterLink to="register" className="md-block-centered"> You've been registered! </RouterLink> </Paper>}
+					{this.state.status==="error" && <Paper zDepth={0}> An error has occurred. </Paper>}
 					<div className="infofield"> Switch to your preffered Ethereum address
 						<Paper zDepth={0} className="solidpaper infopaper"> {addr} </Paper> 
 					</div>
 					<div className="infofield"> Create a new /r/ethereumproofs post with your current address as the post title
-						
+						<Button raised primary={true} className="" label="POST" target="_blank" 
+							href={"https://www.reddit.com/r/ethereumproofs/submit?selftext=true&title="+addr}>  comment </Button>
 					</div>
 					<div className="infofield"> Copy paste your r/ethereumproofs URL here
 						<Paper zDepth={0} className="TextInput">
@@ -105,15 +110,13 @@ export default class Regcard extends Component {
 							/>
 						</Paper> 
 					</div>
-					{this.state.status==="pending" && <LinearProgress key="progress" id="transpending"/>}
-					{this.state.status==="success" && <Paper zDepth={2}> You've been registered! </Paper>}
-					{this.state.status==="error" && <Paper zDepth={3}> An error has occurred. </Paper>}
+
+					
 				</CardText>
-				<CardActions style={{height:"50px"}}>
-					<Button raised primary={true}className="ButtonLeft" label="Submit"  
+				<CardActions style={{height:"50px"}} centered={true}>
+					<Button raised primary={true} label="Submit"  
 						onClick={() => {this.Register();}} disabled={false}> check </Button>
-					<Button raised primary={true} className="ButtonRight" label="POST" target="_blank" 
-							href={"https://www.reddit.com/r/ethereumproofs/submit?selftext=true&title="+addr}>  comment </Button>
+					
 				</CardActions>
 			</Card>
 		);

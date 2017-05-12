@@ -76,7 +76,9 @@ export default class Showcard extends Component {
 				<CardText style={{textAlign: "center"}}> 
 					<div className="infofield"> You are <Paper zDepth={2} className="solidpaper infopaper"> {this.state.addr||"0xDEADBEEF"} </Paper> </div>
 					<div className="infofield"> Your Reddit username is<Paper zDepth={2} className="solidpaper infopaper"> {this.state.name||"Not Registered!"} </Paper> </div>
-					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="solidpaper infopaper"> {this.state.proof||"Nowhere"} </Paper> </div>
+					<div className="infofield"> Your Proof of Reddit is posted at <Paper zDepth={2} className="solidpaper infopaper"> 
+						{this.state.proof?<a href={"https://www.reddit.com/r/ethereumproofs/comments/"+this.state.proof+"/"+this.state.addr}> {this.state.proof} </a>:"Nowhere"} 
+						</Paper> </div>
 				</CardText>
 				<CardActions>
 					<RouterLink to="register" className="md-block-centered"> 

@@ -11,6 +11,7 @@ import TextField from 'react-md/lib/TextFields';
 import ContractInterface from "./ContractUtils.js";
 import {CheckTransaction} from "./DappUtils.js";
 import LinearProgress from 'react-md/lib/Progress/LinearProgress';
+import { Link as RouterLink, Route } from "react-router-dom";
 /* eslint-enable */
 
 export default class Regcard extends Component {

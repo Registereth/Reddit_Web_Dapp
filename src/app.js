@@ -84,7 +84,7 @@ class Web3wrapper extends Component {
 		let web3 = this.state.web3;
 		let coinbase = this.state.coinbase;
 		let passonlocation = this.props.passon;
-		if(!web3 || !coinbase || web3.version.network!=="4" ){ // no web3 so we show them the getcard FIXME this needs to be set to 1 for mainnet
+		if(!web3 || !coinbase || web3.version.network!=="2" ){ // no web3 so we show them the getcard FIXME this needs to be set to 1 for mainnet
 			return (
 				<Getcard />
 			)

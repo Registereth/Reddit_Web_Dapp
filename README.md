@@ -5,7 +5,7 @@
 ```
 git clone
 cd
-npm install (--only=dev)
-./node_modules/.bin/webpack -p
-node . (portnumber)
+npm install 
+./node_modules/webpack/bin/webpack.js -p
+nodejs . (portnumber)
 ```

@@ -91,7 +91,7 @@ export default class Regcard extends Component {
 				</CardTitle> 
 				<CardText className="md-text-center"> 
 					{this.state.status==="success" && <Paper zDepth={0} style={{fontSize: "22px"}}>
-						<RouterLink to="register" className="md-block-centered"> You've been registered! </RouterLink> </Paper>}
+						<RouterLink to="/" className="md-block-centered"> You've been registered! </RouterLink> </Paper>}
 					{this.state.status==="error" && <Paper zDepth={0}> An error has occurred. </Paper>}
 					<div className="infofield"> Switch to your preffered Ethereum address
 						<Paper zDepth={0} className="solidpaper infopaper"> {addr} </Paper> 

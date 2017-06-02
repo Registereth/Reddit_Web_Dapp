@@ -1,7 +1,7 @@
 @import './node_modules/normalize-scss/sass/_normalize';
 @import './node_modules/react-md/src/scss/react-md';
 $md-primary-color: rgba(142, 124, 197, 1);
-$md-secondary-color: rgba(142, 124, 197, 1);
+$md-secondary-color: $md-purple-800;
 $md-font-family: Ubuntu;
 @include react-md-everything;
 
